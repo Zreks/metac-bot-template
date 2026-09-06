@@ -8,6 +8,7 @@ on:
     paths:
       - ".github/workflows/test_bot.yaml"
       - "cashbot.py"
+      - "cashbot_smoke.py"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -30,15 +31,9 @@ jobs:
           installer-parallel: true
       - name: Install dependencies
         run: poetry install --no-interaction --no-root
-      - name: Run bot
+      - name: Run zero-cost smoke test
         run: |
-          poetry run python cashbot.py --mode test_questions
+          poetry run python cashbot_smoke.py
         env:
           METACULUS_TOKEN: ${{ secrets.METACULUS_TOKEN }}
-          PERPLEXITY_API_KEY: ${{ secrets.PERPLEXITY_API_KEY }}
-          EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          ASKNEWS_CLIENT_ID: ${{ secrets.ASKNEWS_CLIENT_ID }}
-          ASKNEWS_SECRET: ${{ secrets.ASKNEWS_SECRET }}
