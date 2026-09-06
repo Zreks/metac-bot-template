@@ -2,9 +2,15 @@ name: Test Bot
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - cashbot-v1
+    paths:
+      - ".github/workflows/test_bot.yaml"
+      - "cashbot.py"
 
 concurrency:
-  group: ${{ github.workflow }}
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
